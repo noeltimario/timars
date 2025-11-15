@@ -3,132 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-Driven Coastal/Urban Flood Early Warning System</title>
-    <!-- Load Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com"></script>
-    <script>
+    <title>AI-Driven Flood Warning System Architecture</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind to use Inter and custom color scheme --><script>
         tailwind.config = {
             theme: {
                 extend: {
+                    colors: {
+                        'primary-blue': '#1e40af',
+                        'secondary-cyan': '#06b6d4',
+                        // Custom dark background for the diagram sections
+                        'dark-section-bg': '#070b15', 
+                        'glow-border-blue': '#38bdf8', 
+                        'glow-border-cyan': '#22d3ee', 
+                        'text-light': '#e2e8f0', 
+                    },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                     },
-                    colors: {
-                        'dark-bg-primary': '#0a192f', // Deep navy blue
-                        'dark-bg-secondary': '#172a45', // Slightly lighter navy for cards
-                        'accent-blue': '#64ffda',      // Bright, glowing green-blue for accents
-                        'text-light': '#ccd6f6',       // Light gray-blue for main text
-                        'text-muted': '#8892b0',       // Muted gray-blue for descriptions
-                    },
-                    boxShadow: {
-                        'feature-glow': '0 0 15px rgba(100, 255, 218, 0.4), 0 0 20px rgba(100, 255, 218, 0.1)',
-                        'card-hover-glow': '0 0 25px rgba(100, 255, 218, 0.6), 0 0 35px rgba(100, 255, 218, 0.2)',
-                    }
-                }
+                },
             }
         }
     </script>
     <style>
-        body {
-            background-color: #0a192f;
-            background-image: radial-gradient(at 50% 0%, rgba(27, 44, 76, 0.8) 0%, rgba(10, 25, 47, 0.95) 70%),
-                              linear-gradient(to bottom, #0a192f, #071321);
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }
-        .feature-card {
-            background-color: #172a45; /* Darker blue for cards */
-            border: 1px solid rgba(100, 255, 218, 0.15); /* Subtle glowing border */
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth transition */
-            position: relative;
-            overflow: hidden;
-            border-radius: 1rem; /* More rounded corners */
-        }
-        .feature-card::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at center, rgba(100, 255, 218, 0.05) 0%, transparent 70%);
-            transform: rotate(0deg);
-            transition: transform 0.8s ease-out;
-            opacity: 0;
-            z-index: 0;
-        }
-        .feature-card:hover::before {
-            transform: rotate(180deg);
-            opacity: 1;
-        }
-        .feature-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: var(--tw-shadow-card-hover-glow); /* Apply glowing shadow on hover */
-        }
-        .feature-card > * {
-            position: relative; /* Ensure content is above the pseudo-element */
-            z-index: 1;
-        }
-
-        /* Styling for icons to integrate with the dark theme */
-        .feature-icon-wrapper {
-            background-color: rgba(100, 255, 218, 0.1); /* Subtle background for icon */
-            border: 1px solid rgba(100, 255, 218, 0.2);
-            display: flex; /* Use flexbox for centering image/svg */
-            align-items: center;
-            justify-content: center;
-            width: 72px; /* Fixed size for wrapper */
-            height: 72px; /* Fixed size for wrapper */
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-6 font-sans">
+<body class="bg-dark-section-bg font-sans text-gray-800 min-h-screen flex items-center justify-center">
 
-    <div class="max-w-4xl mx-auto text-center">
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-accent-blue tracking-tight mb-12
-                   inline-block px-6 py-3 rounded-xl bg-dark-bg-secondary shadow-feature-glow">
-            AI-Driven Coastal/Urban Flood Early Warning System
-        </h1>
+    <div class="max-w-7xl mx-auto p-4 sm:p-8 lg:p-12 w-full">
+        <!-- ARCHITECTURE DIAGRAM SECTION --><section class="bg-dark-section-bg p-4 sm:p-8 rounded-2xl relative overflow-hidden">
+            <!-- Background pattern (subtle dots) --><div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#1a202c 1px, transparent 1px); background-size: 20px 20px;"></div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div class="relative z-10">
 
-            <!-- Feature 1: Low-Cost IoT Deployment -->
-            <div class="feature-card p-8 flex flex-col items-center">
-                <div class="feature-icon-wrapper p-4 rounded-full mb-5">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-accent-blue" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0m0 0"/><path d="M12 18h-7a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7" /><path d="M11 12l4 4l4 -4" /><path d="M18 15l3 3l-3 3" /></svg>
+                <!-- MAIN TITLE -->
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-center mb-12 text-text-light" style="text-shadow: 0 0 15px rgba(56, 189, 248, 0.5);">
+                    AI-Driven Coastal/Urban Flood Early Warning<br>System
+                </h1>
+
+                <!-- SYSTEM ARCHITECTURE HEADER --><div class="mb-12 text-center">
+                    <div class="inline-block bg-[#1e40af] px-8 py-3 rounded-xl text-text-light text-2xl font-bold tracking-wider shadow-lg shadow-cyan-500/30 border border-glow-border-cyan">
+                        SYSTEM ARCHITECTURE
+                    </div>
                 </div>
-                <h3 class="text-2xl font-bold text-text-light mb-3">Low-Cost IoT Deployment</h3>
-                <p class="text-text-muted text-center text-lg">Utilizes inexpensive IoT sensor arrays for widespread and accessible implementation across vulnerable communities.</p>
-            </div>
 
-            <!-- Feature 2: Edge-AI TinyML Prediction -->
-            <div class="feature-card p-8 flex flex-col items-center">
-                <div class="feature-icon-wrapper p-4 rounded-full mb-5">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-accent-blue" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0m0 0"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M10 18h4" /><path d="M11 4h2" /><path d="M8 9l-1 -1" /><path d="M16 9l1 -1" /><path d="M12 6l0 2" /><path d="M12 14l0 2" /><path d="M10 12l-2 -2" /><path d="M14 12l2 -2" /></svg>
+                <!-- MAIN HORIZONTAL FLOW (1, 2, 3, 4/5) --><div class="flex flex-col lg:flex-row items-start justify-center lg:space-x-8">
+                    
+                    <!-- BLOCK 1: FIELD NODES (BLUE) --><div class="w-full lg:w-64 flex-shrink-0 p-4 rounded-xl border-2 border-blue-500 bg-blue-900/20 text-text-light shadow-lg shadow-blue-500/10 mb-8 lg:mb-0 transform hover:scale-[1.02] transition-transform duration-300">
+                        <div class="text-xl font-bold mb-3 text-glow-border-blue">FIELD NODES <span class="float-right text-sm font-semibold bg-blue-500 rounded-full h-6 w-6 flex items-center justify-center text-white">1</span></div>
+                        <div class="text-sm space-y-3">
+                            <div class="flex flex-col items-center text-center">
+                                <!-- Icon: Microchip from provided image --><svg class="w-10 h-10 text-cyan-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2 2m-2-2l-2 2M12 20l2 2m-2-2l-2 2M18 5l2 2m-2-2l-2 2M18 17l2 2m-2-2l-2 2M5 12h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1v-2a1 1 0 011-1z"></path></svg>
+                                <p>Multiple ESP32 Microcontrollers</p>
+                            </div>
+                            <div class="flex flex-col items-center text-center mt-3">
+                                <!-- Icon: Ultrasonic Level Barometric Sensor from provided image --><svg class="w-10 h-10 text-cyan-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v16a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H6a2 2 0 00-2 2zm10 0v16M8 8h.01M8 12h.01M8 16h.01"></path></svg>
+                                <p>Ultrasonic Level & Barometric Pressure Sensors</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Arrow 1 (Horizontal) --><div class="lg:w-16 w-full flex justify-center items-center lg:py-0 py-4">
+                        <svg class="w-8 h-8 text-secondary-cyan transform lg:rotate-0 rotate-90 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </div>
+
+                    <!-- BLOCK 2: EDGE PROCESSING (PURPLE/CYAN) --><div class="w-full lg:w-64 flex-shrink-0 p-4 rounded-xl border-2 border-purple-500 bg-purple-900/20 text-text-light shadow-lg shadow-purple-500/10 mb-8 lg:mb-0 transform hover:scale-[1.02] transition-transform duration-300">
+                        <div class="text-xl font-bold mb-3 text-purple-300">EDGE PROCESSING <span class="float-right text-sm font-semibold bg-purple-500 rounded-full h-6 w-6 flex items-center justify-center text-white">2</span></div>
+                        <div class="text-sm space-y-3 flex flex-col items-center text-center">
+                            <!-- Icon: Brain from provided image --><svg class="w-12 h-12 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5.286-9.843A9.957 9.957 0 0012 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10a9.957 9.957 0 00-3.286-7.843z"></path></svg>
+                            <p class="font-semibold mt-2">TinyML Model on ESP32</p>
+                            <p>Real-time Data Analysis & Prediction</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Arrow 2 (Horizontal) --><div class="lg:w-16 w-full flex justify-center items-center lg:py-0 py-4">
+                        <svg class="w-8 h-8 text-secondary-cyan transform lg:rotate-0 rotate-90 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+S                    </div>
+
+                    <!-- BLOCK 3: ALERT TRIGGER (RED) --><div class="w-full lg:w-64 flex-shrink-0 p-4 rounded-xl border-2 border-red-500 bg-red-900/20 text-text-light shadow-lg shadow-red-500/10 mb-8 lg:mb-0 transform hover:scale-[1.02] transition-transform duration-300">
+                        <div class="text-xl font-bold mb-3 text-red-400">ALERT TRIGGER <span class="float-right text-sm font-semibold bg-red-500 rounded-full h-6 w-6 flex items-center justify-center text-white">3</span></div>
+                        <div class="text-sm space-y-3 flex flex-col items-center text-center">
+                            <!-- Icon: Phone/Signal from provided image --><svg class="w-12 h-12 text-red-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18.75V15m0 3.75l-4-4m4 4l4-4m4-8V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-1.25"></path></svg>
+                            <p class="font-semibold mt-2">GSM Module</p>
+                            <p>If 'Red' Risk, Send Signal</p>
+                        </div>
+                    </div>
+
+                    <!-- Arrow 3 (Horizontal to Vertical Split) --><div class="lg:w-16 w-full flex justify-center items-center lg:py-0 py-4">
+                        <svg class="w-8 h-8 text-secondary-cyan transform lg:rotate-0 rotate-90 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </div>
+                    
+                    <!-- FINAL BLOCK: CLOUD/SMS STACK (Vertical Flow) --><div class="w-full lg:w-64 flex-shrink-0 flex flex-col space-y-6">
+                        <!-- BLOCK 4: CLOUD SERVER (CYAN) --><div class="p-4 rounded-xl border-2 border-cyan-500 bg-cyan-900/20 text-text-light shadow-lg shadow-cyan-500/10 transform hover:scale-[1.02] transition-transform duration-300">
+                            <div class="text-xl font-bold mb-2 text-cyan-300">CLOUD SERVER <span class="float-right text-sm font-semibold bg-cyan-500 rounded-full h-6 w-6 flex items-center justify-center text-white">4</span></div>
+                            <div class="text-sm space-y-1 flex flex-col items-center text-center">
+                                <!-- Icon: Cloud from provided image --><svg class="w-10 h-10 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                                <p class="font-semibold mt-2">Firebase / Dashboard</p>
+                                <p>Data Visualization</p>
+                            </div>
+                        </div>
+
+                        <!-- Arrow 4 (Vertical) --><div class="flex justify-center">
+                            <svg class="w-8 h-8 text-green-500 transform rotate-90 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </div>
+
+                        <!-- BLOCK 5: SMS ALERTS (GREEN) --><div class="p-4 rounded-xl border-2 border-green-500 bg-green-900/20 text-text-light shadow-lg shadow-green-500/10 transform hover:scale-[1.02] transition-transform duration-300">
+                            <div class="text-xl font-bold mb-2 text-green-400">SMS ALERTS</div>
+                            <div class="text-sm space-y-1 flex flex-col items-center text-center">
+                                <!-- Icon: Message from provided image --><svg class="w-10 h-10 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                                <p>Registered LGU / Community Contacts</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-                <h3 class="text-2xl font-bold text-text-light mb-3">Edge-AI TinyML Prediction</h3>
-                <p class="text-text-muted text-center text-lg">On-device AI predicts imminent flood risk minutes before criticality, ensuring rapid, localized response capabilities.</p>
             </div>
-
-            <!-- Feature 3: Reliable GSM (SMS) Alerts -->
-            <div class="feature-card p-8 flex flex-col items-center">
-                <div class="feature-icon-wrapper p-4 rounded-full mb-5">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-accent-blue" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0m0 0"/><path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z" /><path d="M12 11l0 3" /><path d="M12 8l0 .01" /></svg>
-                </div>
-                <h3 class="text-2xl font-bold text-text-light mb-3">Reliable GSM (SMS) Alerts</h3>
-                <p class="text-text-muted text-center text-lg">Timely alerts sent via robust GSM (SMS) communication, critical during adverse weather conditions and typhoons.</p>
-            </div>
-
-            <!-- Feature 4: Philippine Urban/Coastal Focus -->
-            <div class="feature-card p-8 flex flex-col items-center">
-                <div class="feature-icon-wrapper p-4 rounded-full mb-5">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-accent-blue" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0m0 0"/><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" /></svg>
-                </div>
-                <h3 class="text-2xl font-bold text-text-light mb-3">Philippine Urban/Coastal Focus</h3>
-                <p class="text-text-muted text-center text-lg">Specifically designed for rapid, localized flood mitigation in vulnerable Philippine urban and coastal communities.</p>
-            </div>
-
-        </div>
+        </section>
     </div>
 
 </body>
