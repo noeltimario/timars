@@ -3,124 +3,839 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-Driven Flood Warning System Architecture</title>
-    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
-    <!-- Configure Tailwind to use Inter and custom color scheme --><script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary-blue': '#1e40af',
-                        'secondary-cyan': '#06b6d4',
-                        // Custom dark background for the diagram sections
-                        'dark-section-bg': '#070b15', 
-                        'glow-border-blue': '#38bdf8', 
-                        'glow-border-cyan': '#22d3ee', 
-                        'text-light': '#e2e8f0', 
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                },
+    <title>VitClinic — Vercel Static Code Preview</title>
+    <!-- Highlight.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+        /* Base styles - using dark, professional palette */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1a1f35 100%);
+            color: #e2e8f0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        header {
+            background: rgba(15, 23, 42, 0.95);
+            border-bottom: 1px solid #334155;
+            padding: 2rem 1rem;
+            text-align: center;
+            backdrop-filter: blur(8px);
+        }
+        
+        header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.25rem;
+        }
+        
+        header p {
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+        }
+        
+        .section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #3b82f6;
+            color: #60a5fa;
+        }
+        
+        /* Code Panel Styling */
+        .code-panel {
+            background: #1a1f35;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.3s ease;
+        }
+        
+        .code-panel:hover {
+            border-color: #475569;
+        }
+        
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(30, 41, 59, 0.5);
+            border-bottom: 1px solid #334155;
+        }
+        
+        .panel-filename {
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #60a5fa;
+        }
+        
+        /* Copy Button */
+        .copy-btn {
+            padding: 0.5rem 1rem;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .copy-btn:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+        
+        .copy-btn.copied {
+            background: #10b981;
+        }
+        
+        /* Code Content */
+        pre {
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 0;
+        }
+        
+        code {
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        .hljs {
+            background: transparent !important;
+        }
+        
+        /* Setup Section Styling */
+        .setup-section {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .setup-section h3 {
+            color: #60a5fa;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .setup-section p {
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+        
+        .setup-section strong {
+            color: #f1f5f9;
+        }
+        
+        .credential-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 3px solid #3b82f6;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #a5b4fc;
+        }
+        
+        .cmd-steps {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .cmd-steps ol {
+            margin-left: 1.5rem;
+        }
+        
+        .cmd-steps li {
+            margin-bottom: 0.75rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+        
+        .cmd-code {
+            background: #0f172a;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #60a5fa;
+            display: inline-block;
+            margin: 0.25rem 0;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.25rem;
+            }
+            
+            main {
+                margin: 1rem auto;
+            }
+            
+            .panel-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+            
+            .copy-btn {
+                width: 100%;
+            }
+            
+            .setup-section {
+                padding: 1.5rem;
             }
         }
-    </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        /* Styles for the simulated style.css content */
+        /* Since we can't link to style.css, the actual CSS needed for the PHP files to look good needs to be included in the header */
+        .container {
+            max-width: 90%;
+            margin: 20px auto;
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            color: #333; /* Ensuring text is visible */
+        }
+
+        /* Overriding the default preview background for the setup guide */
+        .setup-section h2 {
+            border-bottom: 2px solid #10b981 !important; 
+            color: #34d399 !important;
+        }
     </style>
 </head>
-<body class="bg-dark-section-bg font-sans text-gray-800 min-h-screen flex items-center justify-center">
-
-    <div class="max-w-7xl mx-auto p-4 sm:p-8 lg:p-12 w-full">
-        <!-- ARCHITECTURE DIAGRAM SECTION --><section class="bg-dark-section-bg p-4 sm:p-8 rounded-2xl relative overflow-hidden">
-            <!-- Background pattern (subtle dots) --><div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#1a202c 1px, transparent 1px); background-size: 20px 20px;"></div>
-
-            <div class="relative z-10">
-
-                <!-- MAIN TITLE -->
-                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-center mb-12 text-text-light" style="text-shadow: 0 0 15px rgba(56, 189, 248, 0.5);">
-                    AI-Driven Coastal/Urban Flood Early Warning<br>System
-                </h1>
-
-                <!-- SYSTEM ARCHITECTURE HEADER --><div class="mb-12 text-center">
-                    <div class="inline-block bg-[#1e40af] px-8 py-3 rounded-xl text-text-light text-2xl font-bold tracking-wider shadow-lg shadow-cyan-500/30 border border-glow-border-cyan">
-                        SYSTEM ARCHITECTURE
-                    </div>
+<body>
+    <header>
+        <h1>VitClinic — Vercel Static Code Preview</h1>
+        <p>PHP CRUD Project Source Code (MySQLi)</p>
+    </header>
+    
+    <main>
+        <!-- Code Preview Section -->
+        <section class="section">
+            <h2>Source Code Files</h2>
+            
+            <!-- db.php -->
+            <div class="code-panel">
+                <div class="panel-header">
+                    <span class="panel-filename">db.php</span>
+                    <button class="copy-btn" onclick="copyCode(this, 'code-db')">Copy</button>
                 </div>
+                <!-- Note: The PHP code is escaped and syntax highlighted for display -->
+                <pre><code class="language-php hljs" id="code-db">&lt;?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "vitclinic_db";
 
-                <!-- MAIN HORIZONTAL FLOW (1, 2, 3, 4/5) --><div class="flex flex-col lg:flex-row items-start justify-center lg:space-x-8">
-                    
-                    <!-- BLOCK 1: FIELD NODES (BLUE) --><div class="w-full lg:w-64 flex-shrink-0 p-4 rounded-xl border-2 border-blue-500 bg-blue-900/20 text-text-light shadow-lg shadow-blue-500/10 mb-8 lg:mb-0 transform hover:scale-[1.02] transition-transform duration-300">
-                        <div class="text-xl font-bold mb-3 text-glow-border-blue">FIELD NODES <span class="float-right text-sm font-semibold bg-blue-500 rounded-full h-6 w-6 flex items-center justify-center text-white">1</span></div>
-                        <div class="text-sm space-y-3">
-                            <div class="flex flex-col items-center text-center">
-                                <!-- Icon: Microchip from provided image --><svg class="w-10 h-10 text-cyan-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2 2m-2-2l-2 2M12 20l2 2m-2-2l-2 2M18 5l2 2m-2-2l-2 2M18 17l2 2m-2-2l-2 2M5 12h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1v-2a1 1 0 011-1z"></path></svg>
-                                <p>Multiple ESP32 Microcontrollers</p>
-                            </div>
-                            <div class="flex flex-col items-center text-center mt-3">
-                                <!-- Icon: Ultrasonic Level Barometric Sensor from provided image --><svg class="w-10 h-10 text-cyan-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v16a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H6a2 2 0 00-2 2zm10 0v16M8 8h.01M8 12h.01M8 16h.01"></path></svg>
-                                <p>Ultrasonic Level & Barometric Pressure Sensors</p>
-                            </div>
-                        </div>
-                    </div>
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-                    <!-- Arrow 1 (Horizontal) --><div class="lg:w-16 w-full flex justify-center items-center lg:py-0 py-4">
-                        <svg class="w-8 h-8 text-secondary-cyan transform lg:rotate-0 rotate-90 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                    </div>
+// Check connection
+if ($conn->connect_error) {
+    // In a real application, you might log this error instead of dying.
+    die("Connection failed: " . $conn->connect_error);
+}
 
-                    <!-- BLOCK 2: EDGE PROCESSING (PURPLE/CYAN) --><div class="w-full lg:w-64 flex-shrink-0 p-4 rounded-xl border-2 border-purple-500 bg-purple-900/20 text-text-light shadow-lg shadow-purple-500/10 mb-8 lg:mb-0 transform hover:scale-[1.02] transition-transform duration-300">
-                        <div class="text-xl font-bold mb-3 text-purple-300">EDGE PROCESSING <span class="float-right text-sm font-semibold bg-purple-500 rounded-full h-6 w-6 flex items-center justify-center text-white">2</span></div>
-                        <div class="text-sm space-y-3 flex flex-col items-center text-center">
-                            <!-- Icon: Brain from provided image --><svg class="w-12 h-12 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5.286-9.843A9.957 9.957 0 0012 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10a9.957 9.957 0 00-3.286-7.843z"></path></svg>
-                            <p class="font-semibold mt-2">TinyML Model on ESP32</p>
-                            <p>Real-time Data Analysis & Prediction</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Arrow 2 (Horizontal) --><div class="lg:w-16 w-full flex justify-center items-center lg:py-0 py-4">
-                        <svg class="w-8 h-8 text-secondary-cyan transform lg:rotate-0 rotate-90 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-S                    </div>
+// Set charset to utf8 for proper character encoding
+$conn->set_charset("utf8");
 
-                    <!-- BLOCK 3: ALERT TRIGGER (RED) --><div class="w-full lg:w-64 flex-shrink-0 p-4 rounded-xl border-2 border-red-500 bg-red-900/20 text-text-light shadow-lg shadow-red-500/10 mb-8 lg:mb-0 transform hover:scale-[1.02] transition-transform duration-300">
-                        <div class="text-xl font-bold mb-3 text-red-400">ALERT TRIGGER <span class="float-right text-sm font-semibold bg-red-500 rounded-full h-6 w-6 flex items-center justify-center text-white">3</span></div>
-                        <div class="text-sm space-y-3 flex flex-col items-center text-center">
-                            <!-- Icon: Phone/Signal from provided image --><svg class="w-12 h-12 text-red-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18.75V15m0 3.75l-4-4m4 4l4-4m4-8V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-1.25"></path></svg>
-                            <p class="font-semibold mt-2">GSM Module</p>
-                            <p>If 'Red' Risk, Send Signal</p>
-                        </div>
-                    </div>
-
-                    <!-- Arrow 3 (Horizontal to Vertical Split) --><div class="lg:w-16 w-full flex justify-center items-center lg:py-0 py-4">
-                        <svg class="w-8 h-8 text-secondary-cyan transform lg:rotate-0 rotate-90 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                    </div>
-                    
-                    <!-- FINAL BLOCK: CLOUD/SMS STACK (Vertical Flow) --><div class="w-full lg:w-64 flex-shrink-0 flex flex-col space-y-6">
-                        <!-- BLOCK 4: CLOUD SERVER (CYAN) --><div class="p-4 rounded-xl border-2 border-cyan-500 bg-cyan-900/20 text-text-light shadow-lg shadow-cyan-500/10 transform hover:scale-[1.02] transition-transform duration-300">
-                            <div class="text-xl font-bold mb-2 text-cyan-300">CLOUD SERVER <span class="float-right text-sm font-semibold bg-cyan-500 rounded-full h-6 w-6 flex items-center justify-center text-white">4</span></div>
-                            <div class="text-sm space-y-1 flex flex-col items-center text-center">
-                                <!-- Icon: Cloud from provided image --><svg class="w-10 h-10 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                                <p class="font-semibold mt-2">Firebase / Dashboard</p>
-                                <p>Data Visualization</p>
-                            </div>
-                        </div>
-
-                        <!-- Arrow 4 (Vertical) --><div class="flex justify-center">
-                            <svg class="w-8 h-8 text-green-500 transform rotate-90 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                        </div>
-
-                        <!-- BLOCK 5: SMS ALERTS (GREEN) --><div class="p-4 rounded-xl border-2 border-green-500 bg-green-900/20 text-text-light shadow-lg shadow-green-500/10 transform hover:scale-[1.02] transition-transform duration-300">
-                            <div class="text-xl font-bold mb-2 text-green-400">SMS ALERTS</div>
-                            <div class="text-sm space-y-1 flex flex-col items-center text-center">
-                                <!-- Icon: Message from provided image --><svg class="w-10 h-10 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
-                                <p>Registered LGU / Community Contacts</p>
-                            </div>
-                        </div>
-                    </div>
-
+?&gt;</code></pre>
+            </div>
+            
+            <!-- index.php -->
+            <div class="code-panel">
+                <div class="panel-header">
+                    <span class="panel-filename">index.php (List Patients)</span>
+                    <button class="copy-btn" onclick="copyCode(this, 'code-index')">Copy</button>
                 </div>
+                <pre><code class="language-php hljs" id="code-index">&lt;?php
+// Include the database connection script
+include 'db.php';
+
+// Fetch all patient records
+$sql = "SELECT id, name, age, ailment FROM patients";
+$result = $conn->query($sql);
+
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;VitClinic - Patient Management&lt;/title&gt;
+    &lt;!-- The original required a style.css, which is displayed below --&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;h1&gt;VitClinic - Patient Records&lt;/h1&gt;
+        &lt;a href="add.php" class="btn-add"&gt;Add New Patient&lt;/a&gt;
+        
+        &lt;table&gt;
+            &lt;tr&gt;
+                &lt;th&gt;ID&lt;/th&gt;
+                &lt;th&gt;Name&lt;/th&gt;
+                &lt;th&gt;Age&lt;/th&gt;
+                &lt;th&gt;Ailment&lt;/th&gt;
+                &lt;th&gt;Actions&lt;/th&gt;
+            &lt;/tr&gt;
+            &lt;?php
+            if ($result->num_rows &gt; 0) {
+                while($row = $result-&gt;fetch_assoc()) {
+                    echo "&lt;tr&gt;";
+                    echo "&lt;td&gt;" . $row["id"] . "&lt;/td&gt;";
+                    // Use htmlspecialchars to prevent XSS
+                    echo "&lt;td&gt;" . htmlspecialchars($row["name"]) . "&lt;/td&gt;";
+                    echo "&lt;td&gt;" . $row["age"] . "&lt;/td&gt;";
+                    echo "&lt;td&gt;" . htmlspecialchars($row["ailment"]) . "&lt;/td&gt;";
+                    echo "&lt;td&gt;";
+                    echo "&lt;a href='edit.php?id=" . $row["id"] . "'&gt;Edit&lt;/a&gt; | ";
+                    // NOTE: In a real environment, replace confirm() with a custom modal.
+                    echo "&lt;a href='delete.php?id=" . $row["id"] . "' onclick='return confirm(\"Are you sure?\")'&gt;Delete&lt;/a&gt;";
+                    echo "&lt;/td&gt;";
+                    echo "&lt;/tr&gt;";
+                }
+            } else {
+                echo "&lt;tr&gt;&lt;td colspan='5'&gt;No records found&lt;/td&gt;&lt;/tr&gt;";
+            }
+            ?&gt;
+        &lt;/table&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;?php
+// Close the database connection
+$conn-&gt;close();
+?&gt;</code></pre>
+            </div>
+            
+            <!-- add.php -->
+            <div class="code-panel">
+                <div class="panel-header">
+                    <span class="panel-filename">add.php (Create Record)</span>
+                    <button class="copy-btn" onclick="copyCode(this, 'code-add')">Copy</button>
+                </div>
+                <pre><code class="language-php hljs" id="code-add">&lt;?php
+include 'db.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Sanitize input using real_escape_string (basic security against SQL injection)
+    $name = $conn-&gt;real_escape_string($_POST['name']);
+    $age = intval($_POST['age']); // Ensure age is an integer
+    $ailment = $conn-&gt;real_escape_string($_POST['ailment']);
+    
+    // SQL INSERT query
+    $sql = "INSERT INTO patients (name, age, ailment) VALUES ('$name', $age, '$ailment')";
+    
+    if ($conn-&gt;query($sql) === TRUE) {
+        // Redirect to the index page on success
+        header("Location: index.php");
+        exit();
+    } else {
+        $error = "Error: " . $sql . "&lt;br&gt;" . $conn-&gt;error;
+    }
+}
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Add Patient - VitClinic&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;h1&gt;Add New Patient&lt;/h1&gt;
+        
+        &lt;?php if (isset($error)) echo "&lt;p class='error'&gt;$error&lt;/p&gt;"; ?&gt;
+        
+        &lt;form method="POST"&gt;
+            &lt;label for="name"&gt;Patient Name:&lt;/label&gt;
+            &lt;input type="text" name="name" required&gt;
+            
+            &lt;label for="age"&gt;Age:&lt;/label&gt;
+            &lt;input type="number" name="age" required&gt;
+            
+            &lt;label for="ailment"&gt;Ailment:&lt;/label&gt;
+            &lt;textarea name="ailment" required&gt;&lt;/textarea&gt;
+            
+            &lt;button type="submit"&gt;Add Patient&lt;/button&gt;
+            &lt;a href="index.php" class="btn-cancel"&gt;Cancel&lt;/a&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;?php
+$conn-&gt;close();
+?&gt;</code></pre>
+            </div>
+            
+            <!-- edit.php -->
+            <div class="code-panel">
+                <div class="panel-header">
+                    <span class="panel-filename">edit.php (Update Record)</span>
+                    <button class="copy-btn" onclick="copyCode(this, 'code-edit')">Copy</button>
+                </div>
+                <pre><code class="language-php hljs" id="code-edit">&lt;?php
+include 'db.php';
+
+// Check for ID parameter
+if (!isset($_GET['id'])) {
+    header("Location: index.php");
+    exit();
+}
+
+$id = intval($_GET['id']);
+$sql = "SELECT id, name, age, ailment FROM patients WHERE id = $id";
+$result = $conn-&gt;query($sql);
+$patient = $result-&gt;fetch_assoc();
+
+// If POST request, handle update
+if ($_SERVER["REQUEST_METHOD"] == "POST" &amp;&amp; $patient) {
+    $name = $conn-&gt;real_escape_string($_POST['name']);
+    $age = intval($_POST['age']);
+    $ailment = $conn-&gt;real_escape_string($_POST['ailment']);
+    
+    $sql = "UPDATE patients SET name = '$name', age = $age, ailment = '$ailment' WHERE id = $id";
+    
+    if ($conn-&gt;query($sql) === TRUE) {
+        header("Location: index.php");
+        exit();
+    } else {
+        $error = "Error: " . $conn-&gt;error;
+    }
+} else if (!$patient) {
+    // Redirect if patient not found
+    header("Location: index.php");
+    exit();
+}
+
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Edit Patient - VitClinic&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;h1&gt;Edit Patient&lt;/h1&gt;
+        
+        &lt;?php if (isset($error)) echo "&lt;p class='error'&gt;$error&lt;/p&gt;"; ?&gt;
+        
+        &lt;form method="POST"&gt;
+            &lt;label for="name"&gt;Patient Name:&lt;/label&gt;
+            &lt;input type="text" name="name" value="&lt;?php echo htmlspecialchars($patient['name']); ?&gt;" required&gt;
+            
+            &lt;label for="age"&gt;Age:&lt;/label&gt;
+            &lt;input type="number" name="age" value="&lt;?php echo $patient['age']; ?&gt;" required&gt;
+            
+            &lt;label for="ailment"&gt;Ailment:&lt;/label&gt;
+            &lt;textarea name="ailment" required&gt;&lt;?php echo htmlspecialchars($patient['ailment']); ?&gt;&lt;/textarea&gt;
+            
+            &lt;button type="submit"&gt;Update Patient&lt;/button&gt;
+            &lt;a href="index.php" class="btn-cancel"&gt;Cancel&lt;/a&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;?php
+$conn-&gt;close();
+?&gt;</code></pre>
+            </div>
+            
+            <!-- delete.php -->
+            <div class="code-panel">
+                <div class="panel-header">
+                    <span class="panel-filename">delete.php (Delete Record)</span>
+                    <button class="copy-btn" onclick="copyCode(this, 'code-delete')">Copy</button>
+                </div>
+                <pre><code class="language-php hljs" id="code-delete">&lt;?php
+include 'db.php';
+
+// Only proceed if an ID is provided
+if (isset($_GET['id'])) {
+    $id = intval($_GET['id']);
+    
+    // SQL DELETE query
+    $sql = "DELETE FROM patients WHERE id = $id";
+    
+    if ($conn-&gt;query($sql) === TRUE) {
+        // Redirect on successful deletion
+        header("Location: index.php");
+        exit();
+    } else {
+        $error = "Error: " . $conn-&gt;error;
+        // Handle error, maybe redirect with a status message
+    }
+} else {
+    // If no ID is provided, redirect to the index page
+    header("Location: index.php");
+    exit();
+}
+
+$conn-&gt;close();
+?&gt;</code></pre>
+            </div>
+            
+            <!-- style.css -->
+            <div class="code-panel">
+                <div class="panel-header">
+                    <span class="panel-filename">style.css (The required styles)</span>
+                    <button class="copy-btn" onclick="copyCode(this, 'code-style')">Copy</button>
+                </div>
+                <pre><code class="language-css hljs" id="code-style">* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* This background is for the PHP demo context, not the main preview wrapper */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    color: #667eea;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th {
+    background: #667eea;
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+table tr:hover {
+    background: #f9f9f9;
+}
+
+a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.btn-add, .btn-cancel {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #667eea;
+    color: white;
+    border-radius: 5px;
+    margin: 10px 5px 10px 0;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-add:hover, .btn-cancel:hover {
+    background: #764ba2;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+form label {
+    font-weight: 600;
+    color: #333;
+}
+
+form input, form textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: inherit;
+}
+
+form input:focus, form textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+}
+
+form button {
+    padding: 12px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+form button:hover {
+    background: #764ba2;
+    transform: translateY(-2px);
+}
+
+.error {
+    background: #fee;
+    color: #c33;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border-left: 4px solid #c33;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    table {
+        font-size: 0.9rem;
+    }
+    
+    table th, table td {
+        padding: 8px;
+    }
+}</code></pre>
             </div>
         </section>
-    </div>
+        
+        <!-- Database Setup Section -->
+        <section class="section setup-section">
+            <h2 style="border-bottom: 2px solid #10b981; color: #34d399;">Database Setup (MySQL via XAMPP CMD)</h2>
+            
+            <h3>Database Credentials</h3>
+            <p>These credentials are used in the <span class="cmd-code">db.php</span> file.</p>
+            <div class="credential-box">
+                <strong>Database Name:</strong> vitclinic_db<br>
+                <strong>Username:</strong> root<br>
+                <strong>Password:</strong> (empty/none)
+            </div>
+            
+            <h3>Step-by-Step XAMPP Setup Instructions</h3>
+            
+            <div class="cmd-steps">
+                <strong>For Windows:</strong>
+                <ol>
+                    <li>
+                        <strong>Open Command Prompt</strong> and navigate to the XAMPP MySQL directory:
+                        <div class="cmd-code">cd C:\xampp\mysql\bin</div>
+                    </li>
+                    <li>
+                        <strong>Log in to MySQL Monitor</strong> using the default root account:
+                        <div class="cmd-code">mysql -u root -p</div>
+                        Press Enter when prompted for password (leave it blank).
+                    </li>
+                    <li>
+                        <strong>Create the database:</strong>
+                        <div class="cmd-code">CREATE DATABASE vitclinic_db;</div>
+                    </li>
+                    <li>
+                        <strong>Switch to the new database:</strong>
+                        <div class="cmd-code">USE vitclinic_db;</div>
+                    </li>
+                    <li>
+                        <strong>Create the patients table:</strong>
+                        <div class="cmd-code">CREATE TABLE patients (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100) NOT NULL, age INT, ailment VARCHAR(255));</div>
+                    </li>
+                    <li>
+                        <strong>Verify table creation:</strong>
+                        <div class="cmd-code">SHOW TABLES;</div>
+                    </li>
+                    <li>
+                        <strong>Exit MySQL Monitor:</strong>
+                        <div class="cmd-code">EXIT;</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <div class="cmd-steps" style="margin-top: 1.5rem;">
+                <strong>For Mac/Linux:</strong>
+                <ol>
+                    <li>
+                        <strong>Open Terminal</strong> and navigate to the XAMPP MySQL directory (or ensure MySQL is in PATH):
+                        <div class="cmd-code"># For XAMPP on Mac: cd /Applications/XAMPP/xamppfiles/bin</div>
+                    </li>
+                    <li>
+                        <strong>Log in to MySQL:</strong>
+                        <div class="cmd-code">./mysql -u root -p</div>
+                        Press Enter when prompted for password.
+                    </li>
+                    <li>
+                        Follow steps 3-7 above (same SQL commands).
+                    </li>
+                </ol>
+            </div>
+            
+            <h3 style="margin-top: 2rem;">Final Steps</h3>
+            <p>
+                After creating the database and table:
+            </p>
+            <ol style="margin-left: 1.5rem; color: #cbd5e1;">
+                <li>Place all PHP files (db.php, index.php, add.php, edit.php, delete.php, style.css) in your XAMPP htdocs directory (e.g., <span class="cmd-code">C:\xampp\htdocs\vitclinic</span>)</li>
+                <li>Start XAMPP and ensure MySQL and Apache are running</li>
+                <li>Visit <span class="cmd-code">http://localhost/vitclinic/index.php</span> in your browser</li>
+                <li>Your VitClinic CRUD application should now be ready to use!</li>
+            </ol>
+        </section>
+    </main>
+    
+    <script>
+        // Highlight all code blocks on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Highlighting code blocks
+            document.querySelectorAll('code').forEach((block) => {
+                // hljs.highlightElement(block);
+                try {
+                    hljs.highlightElement(block);
+                } catch (e) {
+                    console.error("Highlight.js failed on a block:", e);
+                }
+            });
 
+            // Re-highlighting command steps since they are not standard code blocks but use the .cmd-code class
+            document.querySelectorAll('.cmd-code').forEach((block) => {
+                // Ensure the block content is treated as bash/sql command line code
+                const pre = document.createElement('pre');
+                const code = document.createElement('code');
+                code.className = 'language-bash hljs';
+                code.textContent = block.textContent;
+                block.textContent = ''; // Clear original content
+                block.appendChild(pre);
+                pre.appendChild(code);
+                hljs.highlightElement(code);
+                
+                // Restore original appearance (undoing the pre/code structure for inline elements)
+                block.textContent = code.textContent; 
+                block.style.backgroundColor = '#0f172a'; // Restore custom look
+                block.style.color = '#60a5fa'; // Restore custom look
+                block.style.padding = '0.5rem 0.75rem';
+                block.style.borderRadius = '4px';
+                block.style.display = 'inline-block';
+            });
+        });
+        
+        // Copy to clipboard functionality
+        function copyCode(button, codeId) {
+            const codeElement = document.getElementById(codeId);
+            // Use textContent to get the raw, unhighlighted code text
+            const text = codeElement.textContent; 
+            
+            // Check for execCommand fallback for iFrame compatibility
+            if (document.execCommand) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    buttonFeedback(button);
+                } catch (err) {
+                    console.error('Fallback copy failed:', err);
+                }
+                document.body.removeChild(textarea);
+                return;
+            }
+
+            // Standard modern clipboard API (may fail in some iFrames)
+            if (navigator.clipboard) {
+                 navigator.clipboard.writeText(text).then(() => {
+                    buttonFeedback(button);
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                });
+            } else {
+                console.error("Clipboard API not available.");
+            }
+        }
+
+        function buttonFeedback(button) {
+            const originalText = button.textContent;
+            button.textContent = 'Copied!';
+            button.classList.add('copied');
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.classList.remove('copied');
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
